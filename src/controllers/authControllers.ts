@@ -5,6 +5,13 @@ import jwt, { SignOptions } from "jsonwebtoken";
 import { CookieOptions } from "express";
 import { env } from "../config/env.js";
 
+/**
+ * Registers a new user
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ * @returns {Promise<void>}
+ */
+
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -33,6 +40,12 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * Logs in a user
+ * @param {Request} req Express request object
+ * @param {Response} res Express response object
+ * @returns {Promise<void>}
+ */
 export const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;

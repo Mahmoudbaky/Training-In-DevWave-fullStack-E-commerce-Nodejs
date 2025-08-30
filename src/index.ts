@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
-import { authRoutes } from "./router/index.js";
+import { authRoutes } from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
+import { setupSwagger } from "./config/swagger";
 
 dotenv.config();
 const app = express();
@@ -52,11 +53,11 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 app.use(express.json());
-app.use("/api/auth", authRoutes);
 
-// app.options("*", cors());
+// Setup swagger
+setupSwagger(app);
+app.use("/api/auth", authRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

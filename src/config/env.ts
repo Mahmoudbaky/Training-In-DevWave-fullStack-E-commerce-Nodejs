@@ -18,6 +18,8 @@ const envSchema = z.object({
   MONGODB_PASSWORD: z.string().optional(),
   MONGODB_PROJECT: z.string().optional(),
 
+  BASE_URL: z.string().default("http://localhost:3000/api"),
+
   // Authentication
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.string().default("24h"),
