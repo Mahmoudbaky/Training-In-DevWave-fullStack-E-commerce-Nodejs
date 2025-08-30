@@ -4,7 +4,7 @@ import express from "express";
 import { authRoutes } from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
-import { setupSwagger } from "./config/swagger";
+import { setupSwagger } from "./config/swagger.js";
 
 dotenv.config();
 const app = express();
