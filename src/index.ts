@@ -57,8 +57,9 @@ app.use(express.json());
 
 // Setup swagger
 setupSwagger(app);
+
+// API routes
 app.use("/api/auth", authRoutes);
-// app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerSpec));
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

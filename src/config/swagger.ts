@@ -1,11 +1,5 @@
 import { Express } from "express";
-import path from "path/win32";
 import swaggerJSDoc from "swagger-jsdoc";
-import { fileURLToPath } from "node:url";
-
-// const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-// const __dirname = path.dirname(__filename);
-// console.log("*************", `${__dirname}/routes/*.ts`, "************");
 
 const options = {
   definition: {
