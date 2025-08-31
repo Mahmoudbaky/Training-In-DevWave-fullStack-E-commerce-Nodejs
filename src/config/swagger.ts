@@ -1,7 +1,5 @@
 import { Express } from "express";
 import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
-import { BASE_URL } from "../lib/constants.js";
 
 const options: swaggerJSDoc.Options = {
   definition: {
@@ -9,42 +7,45 @@ const options: swaggerJSDoc.Options = {
     info: {
       title: "My API Docs",
       version: "1.0.0",
-      description: "API documentation using Swagger",
     },
-    servers: [
-      {
-        url: `${BASE_URL}`, // update to match your base URL
-      },
-    ],
   },
-  // Path to the API docs
-  apis: ["./src/routes/*.ts", "./src/controllers/*.ts"], // adjust as needed
+  apis: ["./src/routes/*.ts", "./src/controllers/*.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
 
 export function setupSwagger(app: Express) {
-  // Serve raw JSON spec
+  // Serve the raw Swagger JSON
   app.get("/docs-json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec);
   });
 
-  // Serve Swagger UI (using CDN assets)
-  app.use(
-    "/docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-      swaggerOptions: {
-        url: "/docs-json", // fetch JSON spec
-      },
-      customCssUrl:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css",
-      customJs:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js",
-      customfavIcon:
-        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/favicon-32x32.png",
-      customSiteTitle: "My API Docs",
-    })
-  );
+  // Serve a custom Swagger UI HTML page (with CDN assets)
+  app.get("/docs", (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>API Docs</title>
+          <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+        </head>
+        <body>
+          <div id="swagger-ui"></div>
+          <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+          <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"></script>
+          <script>
+            window.onload = function() {
+              SwaggerUIBundle({
+                url: '/docs-json',
+                dom_id: '#swagger-ui',
+                presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+                layout: "StandaloneLayout"
+              });
+            };
+          </script>
+        </body>
+      </html>
+    `);
+  });
 }
