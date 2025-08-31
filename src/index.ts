@@ -4,8 +4,7 @@ import express from "express";
 import { authRoutes } from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
-import SwaggerUi from "swagger-ui-express";
-import swaggerSpec from "./config/swagger.js";
+import { setupSwagger } from "./config/swagger.js";
 
 dotenv.config();
 const app = express();
@@ -57,9 +56,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Setup swagger
-// setupSwagger(app);
+setupSwagger(app);
 app.use("/api/auth", authRoutes);
-app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerSpec));
+// app.use("/api-docs", SwaggerUi.serve, SwaggerUi.setup(swaggerSpec));
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
