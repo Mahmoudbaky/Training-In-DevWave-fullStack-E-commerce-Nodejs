@@ -3,7 +3,7 @@
     "target": "es2020",
     "module": "ESNext",
     "removeComments": false,
-    "moduleResolution": "classic",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
