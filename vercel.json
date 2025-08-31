@@ -14,7 +14,12 @@
   ],
   "outputDirectory": "dist",
   "env": {
-    "NODE_ENV": "development"
+    "NODE_ENV": "production"
   },
-  "buildCommand": "npm run vercel-build"
+  "buildCommand": "npm run vercel-build",
+  "functions": {
+    "src/index.ts": {
+      "includeFiles": "dist/**"
+    }
+  }
 }
