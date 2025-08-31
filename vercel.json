@@ -13,6 +13,7 @@
     }
   ],
   "outputDirectory": "dist",
+  "includeFiles": ["dist/**"],
   "env": {
     "NODE_ENV": "development"
   },
