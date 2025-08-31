@@ -61,7 +61,7 @@ app.use("/api/auth", authRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", message: "Insurance Payments API is running" });
+  res.json({ status: "OK", message: "Server is healthy" });
 });
 
 // Handle 404 - catch all unmatched routes
