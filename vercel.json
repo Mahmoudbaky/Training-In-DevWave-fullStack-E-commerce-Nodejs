@@ -1,18 +1,19 @@
 {
   "version": 2,
-  "functions": {
-    "src/index.ts": {
-      "includeFiles": "dist/**"
+  "builds": [
+    {
+      "src": "src/index.ts",
+      "use": "@vercel/node"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "src/index.ts"
     }
   ],
-  "buildCommand": "npm run vercel-build",
   "env": {
     "NODE_ENV": "production"
-  }
+  },
+  "buildCommand": "npm run vercel-build"
 }
