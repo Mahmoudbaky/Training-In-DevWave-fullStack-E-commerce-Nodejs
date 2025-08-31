@@ -1,7 +1,7 @@
+import { Express } from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import { Express } from "express";
-import { BASE_URL } from "../lib/constants";
+import { BASE_URL } from "../lib/constants.js";
 
 const options: swaggerJSDoc.Options = {
   definition: {
