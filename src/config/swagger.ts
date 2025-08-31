@@ -24,20 +24,27 @@ const options: swaggerJSDoc.Options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 export function setupSwagger(app: Express) {
-  app.use(
-    "/docs",
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerSpec, {
-      customCss: `
-        @import url("https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css");
-      `,
-      customSiteTitle: "My API Docs",
-    })
-  );
-
-  // serve the swagger.json spec separately
+  // Serve raw JSON spec
   app.get("/docs-json", (req, res) => {
     res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec);
   });
+
+  // Serve Swagger UI (using CDN assets)
+  app.use(
+    "/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+      swaggerOptions: {
+        url: "/docs-json", // fetch JSON spec
+      },
+      customCssUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.css",
+      customJs:
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js",
+      customfavIcon:
+        "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/favicon-32x32.png",
+      customSiteTitle: "My API Docs",
+    })
+  );
 }
