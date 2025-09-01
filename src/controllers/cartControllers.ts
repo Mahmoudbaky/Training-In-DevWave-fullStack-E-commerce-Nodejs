@@ -147,7 +147,7 @@ export const updateCartItem = async (req: Request, res: Response) => {
       });
     }
 
-    const cart = await Cart.findOne({ user: userId, isActive: true });
+    const cart = await Cart.findOne({ user: userId });
 
     if (!cart) {
       return res.status(404).json({
@@ -183,6 +183,52 @@ export const updateCartItem = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error updating cart item",
+    });
+  }
+};
+
+// Remove item from cart
+export const removeFromCart = async (req: Request, res: Response) => {
+  try {
+    const decoded = extractTokenAndDecode(req as Request);
+
+    if (!decoded) {
+      return res.status(401).json({
+        message: "Not authorized to access this route",
+      });
+    }
+
+    const userId = decoded.id;
+    const { productId } = req.body;
+
+    const cart = await Cart.findOne({ user: userId });
+
+    console.log("Cart found:", cart);
+
+    if (!cart) {
+      return res.status(404).json({
+        success: false,
+        message: "Cart not found",
+      });
+    }
+
+    // Remove item using filter to ensure array is modified
+    const updatedCartItems: any = cart.items.filter(
+      (item: any) => item.product.toString() !== productId
+    );
+
+    cart.items = updatedCartItems;
+
+    await cart.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Item removed from cart successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error removing item from cart",
     });
   }
 };
