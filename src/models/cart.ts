@@ -16,19 +16,19 @@ const cartSchema = new Schema(
       default: 0,
       min: 0,
     },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
   },
   { timestamps: true }
 );
 
 // Calculate total amount before saving
 cartSchema.pre("save", function (next) {
-  this.totalAmount = this.items.reduce((total, item) => {
-    return total + item.price * item.quantity;
-  }, 0);
+  this.totalAmount = parseFloat(
+    this.items
+      .reduce((total, item) => {
+        return total + item.price * item.quantity;
+      }, 0)
+      .toFixed(2)
+  );
   next();
 });
 

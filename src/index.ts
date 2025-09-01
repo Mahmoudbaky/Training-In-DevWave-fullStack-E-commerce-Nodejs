@@ -1,7 +1,12 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
-import { authRoutes, categoryRoutes, productRoutes } from "./routes/index.js";
+import {
+  authRoutes,
+  categoryRoutes,
+  productRoutes,
+  cartRoutes,
+} from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
 import { setupSwagger } from "./config/swagger.js";
@@ -13,9 +18,10 @@ const app = express();
 const corsOptions = {
   origin: function (origin: string | undefined, callback: Function) {
     const allowedOrigins = [
+      "http://localhost:5173",
+      "http://localhost:5174",
       "http://localhost:3000",
       "http://localhost:3001",
-      "http://localhost:5173",
     ];
 
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -59,6 +65,7 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
 
 // Setup swagger
 setupSwagger(app);
