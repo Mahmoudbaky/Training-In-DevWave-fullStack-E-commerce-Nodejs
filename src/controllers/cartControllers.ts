@@ -1,11 +1,7 @@
-import Cart from "../models/cart";
-import CartItem from "../models/cartItem";
-import Product from "../models/product";
-import jwt from "jsonwebtoken";
+import Cart from "../models/cart.js";
+import Product from "../models/product.js";
 import { Request, Response } from "express";
-import { env } from "../config/env";
-import { extractTokenAndDecode } from "../lib/utils";
-// If exported, otherwise redefine
+import { extractTokenAndDecode } from "../lib/utils.js";
 
 interface JwtPayload {
   id: string;

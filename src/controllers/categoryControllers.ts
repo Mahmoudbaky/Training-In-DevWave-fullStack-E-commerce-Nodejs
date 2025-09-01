@@ -1,7 +1,5 @@
 import Category from "../models/category.js";
 import { Request, Response } from "express";
-import jwt, { SignOptions } from "jsonwebtoken";
-import { env } from "../config/env.js";
 import { createCategoryValidationSchema } from "../lib/validators.js";
 
 /**
