@@ -55,13 +55,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Setup swagger
-setupSwagger(app);
-
 // API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
+
+// Setup swagger
+setupSwagger(app);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

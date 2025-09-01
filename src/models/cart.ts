@@ -1,36 +1,39 @@
 import mongoose from "mongoose";
-
+import CartItem from "./cartItem";
 const Schema = mongoose.Schema;
 
-const cartSchema = new Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  products: [
-    {
-      productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        min: 1,
-      },
+const cartSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-  ],
-  createdAt: {
-    type: Date,
-    default: Date.now,
+    items: [CartItem.schema],
+    totalAmount: {
+      type: Number,
+      required: true,
+      default: 0,
+      min: 0,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
+  { timestamps: true }
+);
+
+// Calculate total amount before saving
+cartSchema.pre("save", function (next) {
+  this.totalAmount = this.items.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, 0);
+  next();
 });
+
+// Index for better performance
+cartSchema.index({ user: 1, isActive: 1 });
 
 const Cart = mongoose.model("Cart", cartSchema);
 

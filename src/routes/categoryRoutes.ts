@@ -6,7 +6,7 @@ export const router = express.Router();
 
 /**
  * @openapi
- * /create:
+ * /api/categories/create:
  *   post:
  *     summary: Create a new category
  *     tags:
@@ -93,7 +93,7 @@ router.post("/create", categoryControllers.createCategory);
 
 /**
  * @openapi
- * /categories/{id}:
+ * /api/categories/update/{id}:
  *   put:
  *     summary: Update an existing category
  *     tags:
@@ -200,7 +200,7 @@ router.put("/update/:id", categoryControllers.updateCategory);
 
 /**
  * @openapi
- * /categories:
+ * /api/categories/all-categories:
  *   get:
  *     summary: Get all categories
  *     tags:

@@ -6,7 +6,7 @@ export const router = express.Router();
 
 /**
  * @openapi
- * /auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags:
@@ -74,7 +74,7 @@ router.post("/register", authController.registerUser);
 
 /**
  * @openapi
- * /auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Login a user
  *     tags:

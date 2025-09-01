@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import OrderItem from "./orderItem";
 
 const Schema = mongoose.Schema;
 
@@ -9,20 +10,7 @@ const orderSchema = new Schema(
       ref: "User",
       required: true,
     },
-    products: [
-      {
-        product: {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
-        quantity: {
-          type: Number,
-          required: true,
-          min: 1,
-        },
-      },
-    ],
+    items: [OrderItem.schema],
     totalAmount: {
       type: Number,
       required: true,
@@ -30,8 +18,13 @@ const orderSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "shipped", "delivered", "cancelled"],
+      enum: ["pending", "completed", "cancelled"],
       default: "pending",
+    },
+    shippingAddress: {
+      type: String,
+      required: true,
+      trim: true,
     },
   },
   { timestamps: true }

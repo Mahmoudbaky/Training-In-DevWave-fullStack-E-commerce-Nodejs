@@ -6,7 +6,7 @@ export const router = express.Router();
 
 /**
  * @openapi
- * /products:
+ * /api/products/create:
  *   post:
  *     summary: Create a new product
  *     tags:
@@ -91,7 +91,7 @@ router.post("/create", productControllers.createProduct);
 
 /**
  * @openapi
- * /products/{id}:
+ * /api/products/update/{id}:
  *   put:
  *     summary: Update an existing product
  *     tags:
@@ -196,7 +196,7 @@ router.put("/update/:id", productControllers.updateProduct);
 
 /**
  * @openapi
- * /products:
+ * /api/products/all:
  *   get:
  *     summary: Get all products
  *     tags:
@@ -265,7 +265,7 @@ router.get("/all", productControllers.getAllProducts);
 
 /**
  * @openapi
- * /products/{id}:
+ * /api/products/{id}:
  *   get:
  *     summary: Get a product by ID
  *     tags:
