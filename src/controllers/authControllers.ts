@@ -28,8 +28,10 @@ export const registerUser = async (req: Request, res: Response) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({ email, password: hashedPassword });
-    await newUser.save();
+    await User.create({
+      email,
+      password: hashedPassword,
+    });
 
     res
       .status(201)

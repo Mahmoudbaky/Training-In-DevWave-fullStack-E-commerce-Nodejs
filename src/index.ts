@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import express from "express";
-import { authRoutes } from "./routes/index.js";
+import { authRoutes, categoryRoutes, productRoutes } from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
 import { setupSwagger } from "./config/swagger.js";
@@ -60,6 +60,8 @@ setupSwagger(app);
 
 // API routes
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/products", productRoutes);
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -69,7 +71,7 @@ app.get("/api/health", (req, res) => {
 // Handle 404 - catch all unmatched routes
 app.use((req, res) => {
   res.status(404).json({
-    error: "Not Found",
+    error: "Not Found, please use a valid endpoint",
   });
 });
 
