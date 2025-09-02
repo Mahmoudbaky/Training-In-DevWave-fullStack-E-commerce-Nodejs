@@ -575,7 +575,7 @@ router.get(
 /**
  * @openapi
  * /api/orders/admin-update-order/{orderId}:
- *   patch:
+ *   put:
  *     summary: Update order status (Admin only)
  *     description: Allows an admin to update the status of an order. Valid statuses are `pending`, `completed`, or `cancelled`.
  *     tags:
