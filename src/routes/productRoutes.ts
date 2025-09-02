@@ -42,6 +42,22 @@ export const router = express.Router();
  *                 items:
  *                   type: string
  *                   example: https://example.com/images/iphone15.png
+ *               banner:
+ *                 type: string
+ *                 example: https://example.com/images/iphone15-banner.png
+ *               deliveryDate:
+ *                 type: string
+ *                 format: date-time
+ *                 example: 2023-09-15T12:00:00Z
+ *               stars:
+ *                 type: integer
+ *                 example: 4
+ *               discount:
+ *                 type: integer
+ *                 example: 10
+ *               saleRate:
+ *                 type: integer
+ *                 example: 1000
  *     responses:
  *       201:
  *         description: Product created successfully
@@ -134,6 +150,22 @@ router.post("/create", productControllers.createProduct);
  *                 items:
  *                   type: string
  *                   example: https://example.com/images/iphone15-pro.png
+ *               banner:
+ *                 type: string
+ *                 example: https://example.com/images/iphone15-banner.png
+ *               deliveryDate:
+ *                 type: string
+ *                 format: date-time
+ *                 example: 2023-09-15T12:00:00Z
+ *               stars:
+ *                 type: integer
+ *                 example: 4
+ *               discount:
+ *                 type: integer
+ *                 example: 10
+ *               saleRate:
+ *                 type: integer
+ *                 example: 1000
  *     responses:
  *       200:
  *         description: Product updated successfully

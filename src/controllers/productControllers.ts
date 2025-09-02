@@ -16,6 +16,8 @@ export const createProduct = async (req: Request, res: Response) => {
       });
     }
 
+    console.log(validationResponse);
+
     await Product.create(validationResponse.data);
 
     res.status(201).json({

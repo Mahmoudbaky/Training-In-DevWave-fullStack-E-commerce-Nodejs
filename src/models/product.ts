@@ -24,11 +24,39 @@ const productSchema = new Schema(
       ref: "Category",
       required: true,
     },
-    image: {
-      type: String,
-      optional: true,
-      trim: true,
+    stock: {
+      type: Number,
+      required: true,
+      min: 0,
     },
+    stars: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 5,
+    },
+    deliveryDate: {
+      type: Date,
+      required: true,
+    },
+    discount: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 100,
+    },
+    saleRate: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 5000,
+    },
+    images: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
     banner: {
       type: String,
       optional: true,
