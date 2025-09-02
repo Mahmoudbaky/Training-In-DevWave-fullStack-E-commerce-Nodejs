@@ -371,7 +371,7 @@ router.put(
 
 /**
  * @openapi
- * api/cart/remove-from-cart:
+ * /api/cart/remove-from-cart:
  *   delete:
  *     summary: Remove an item from the cart
  *     tags:
@@ -485,6 +485,75 @@ router.delete(
   protect,
   authorize("user", "admin"),
   cartController.removeFromCart
+);
+
+/**
+ * @openapi
+ * /api/cart/clear-cart:
+ *   delete:
+ *     summary: Clear all items from the logged-in user's cart
+ *     tags:
+ *       - Cart
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Cart cleared or already empty
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Cart cleared successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: 64c9a9f2d3a2f1a2b3c4d5f7
+ *                     user:
+ *                       type: string
+ *                       example: 64c7a7f1d3a2f1a2b3c4d5e8
+ *                     items:
+ *                       type: array
+ *                       example: []
+ *                     totalAmount:
+ *                       type: number
+ *                       example: 0
+ *       401:
+ *         description: Unauthorized - Missing or invalid token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Not authorized to access this route
+ *       500:
+ *         description: Error clearing cart
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Error clearing cart
+ */
+router.delete(
+  "/clear-cart",
+  protect,
+  authorize("user", "admin"),
+  cartController.clearCart
 );
 
 export default router;
