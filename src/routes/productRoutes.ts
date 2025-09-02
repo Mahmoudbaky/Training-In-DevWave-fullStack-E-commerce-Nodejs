@@ -1,4 +1,5 @@
 import express from "express";
+import { protect, authorize } from "../middleware/auth.js";
 
 import * as productControllers from "../controllers/productControllers.js";
 
@@ -25,6 +26,9 @@ export const router = express.Router();
  *               name:
  *                 type: string
  *                 example: iPhone 15
+ *               brand:
+ *                 type: string
+ *                 example: Apple
  *               description:
  *                 type: string
  *                 example: Latest Apple smartphone with A17 chip
@@ -103,7 +107,12 @@ export const router = express.Router();
  *                   example: Internal server error
  */
 
-router.post("/create", productControllers.createProduct);
+router.post(
+  "/create",
+  protect,
+  authorize("user", "admin"),
+  productControllers.createProduct
+);
 
 /**
  * @openapi
@@ -224,18 +233,37 @@ router.post("/create", productControllers.createProduct);
  *                   example: Internal server error
  */
 
-router.put("/update/:id", productControllers.updateProduct);
+router.put(
+  "/update/:id",
+  protect,
+  authorize("user", "admin"),
+  productControllers.updateProduct
+);
 
 /**
  * @openapi
  * /api/products/all:
  *   get:
- *     summary: Get all products
+ *     summary: Get all products with pagination
+ *     description: Retrieve a paginated list of products.
  *     tags:
  *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of products per page
  *     responses:
  *       200:
- *         description: List of products retrieved successfully
+ *         description: Products retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -247,39 +275,81 @@ router.put("/update/:id", productControllers.updateProduct);
  *                 products:
  *                   type: array
  *                   items:
- *                     type: object
- *                     properties:
- *                       _id:
- *                         type: string
- *                         example: 64c8e8f1d3a2f1a2b3c4d5e6
- *                       name:
- *                         type: string
- *                         example: iPhone 15
- *                       description:
- *                         type: string
- *                         example: Latest Apple smartphone with A17 chip
- *                       price:
- *                         type: number
- *                         example: 1199.99
- *                       category:
- *                         type: string
- *                         example: 64c8e8f1d3a2f1a2b3c4d5e6
- *                       stock:
- *                         type: integer
- *                         example: 50
- *                       images:
- *                         type: array
- *                         items:
- *                           type: string
- *                           example: https://example.com/images/iphone15.png
- *                       createdAt:
- *                         type: string
- *                         format: date-time
- *                       updatedAt:
- *                         type: string
- *                         format: date-time
+ *                     $ref: '#/components/schemas/Product'
+ *                 total:
+ *                   type: integer
+ *                   example: 42
+ *                 page:
+ *                   type: integer
+ *                   example: 1
+ *                 pages:
+ *                   type: integer
+ *                   example: 5
  *       500:
  *         description: Internal server error
+ */
+
+router.get(
+  "/all",
+  protect,
+  authorize("user", "admin"),
+  productControllers.getAllProducts
+);
+
+/**
+ * @openapi
+ * /api/products/filter:
+ *   get:
+ *     summary: Filter products
+ *     description: Retrieve products filtered by category, brand, price range, rating, and delivery day, with pagination.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: Filter products by category
+ *       - in: query
+ *         name: brand
+ *         schema:
+ *           type: string
+ *         description: Filter products by brand
+ *       - in: query
+ *         name: minPrice
+ *         schema:
+ *           type: number
+ *         description: Minimum price
+ *       - in: query
+ *         name: maxPrice
+ *         schema:
+ *           type: number
+ *         description: Maximum price
+ *       - in: query
+ *         name: rating
+ *         schema:
+ *           type: number
+ *         description: Minimum rating (greater than or equal)
+ *       - in: query
+ *         name: deliveryDay
+ *         schema:
+ *           type: integer
+ *         description: Maximum delivery days allowed
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Number of products per page
+ *     responses:
+ *       200:
+ *         description: Filtered products retrieved successfully
  *         content:
  *           application/json:
  *             schema:
@@ -287,13 +357,30 @@ router.put("/update/:id", productControllers.updateProduct);
  *               properties:
  *                 success:
  *                   type: boolean
- *                   example: false
- *                 message:
- *                   type: string
- *                   example: Internal server error
+ *                   example: true
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Product'
+ *                 total:
+ *                   type: integer
+ *                   example: 120
+ *                 page:
+ *                   type: integer
+ *                   example: 2
+ *                 pages:
+ *                   type: integer
+ *                   example: 12
+ *       500:
+ *         description: Internal server error
  */
 
-router.get("/all", productControllers.getAllProducts);
+router.get(
+  "/filter",
+  protect,
+  authorize("user", "admin"),
+  productControllers.filterProducts
+);
 
 /**
  * @openapi
@@ -380,6 +467,11 @@ router.get("/all", productControllers.getAllProducts);
  *                   example: Internal server error
  */
 
-router.get("/:id", productControllers.getProductById);
+router.get(
+  "/:id",
+  protect,
+  authorize("user", "admin"),
+  productControllers.getProductById
+);
 
 export default router;

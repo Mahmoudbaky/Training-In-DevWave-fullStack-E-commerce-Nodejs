@@ -1,5 +1,5 @@
 import express from "express";
-
+import { protect, authorize } from "../middleware/auth.js";
 import * as categoryControllers from "../controllers/categoryControllers.js";
 
 export const router = express.Router();
@@ -89,7 +89,12 @@ export const router = express.Router();
  *                   example: Internal server error
  */
 
-router.post("/create", categoryControllers.createCategory);
+router.post(
+  "/create",
+  protect,
+  authorize("admin"),
+  categoryControllers.createCategory
+);
 
 /**
  * @openapi
@@ -196,7 +201,12 @@ router.post("/create", categoryControllers.createCategory);
  *                   example: Internal server error
  */
 
-router.put("/update/:id", categoryControllers.updateCategory);
+router.put(
+  "/update/:id",
+  protect,
+  authorize("admin"),
+  categoryControllers.updateCategory
+);
 
 /**
  * @openapi
@@ -251,6 +261,11 @@ router.put("/update/:id", categoryControllers.updateCategory);
  *                   example: Internal server error
  */
 
-router.get("/all-categories", categoryControllers.getAllCategories);
+router.get(
+  "/all-categories",
+  protect,
+  authorize("user", "admin"),
+  categoryControllers.getAllCategories
+);
 
 export default router;
