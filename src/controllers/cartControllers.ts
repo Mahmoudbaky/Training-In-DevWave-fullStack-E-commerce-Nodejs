@@ -23,7 +23,7 @@ export const getCart = async (req: Request, res: Response) => {
 
     const userId = decoded.id; // Assuming user ID comes from auth middleware
 
-    const cart = await Cart.findOne({ user: userId, isActive: true })
+    const cart = await Cart.findOne({ user: userId })
       .populate("items.product", "name price image")
       .exec();
 
