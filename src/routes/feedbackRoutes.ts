@@ -1,6 +1,6 @@
 import express from "express";
 import { protect, authorize } from "../middleware/auth.js";
-import * as feedbackControllers from "../controllers/feedBackControllers.js";
+import * as feedbackControllers from "../controllers/feedbackControllers.js";
 
 export const router = express.Router();
 

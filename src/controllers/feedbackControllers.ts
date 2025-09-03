@@ -1,4 +1,4 @@
-import Feedback from "../models/feedBack.js";
+import Feedback from "../models/feedback.js";
 import product from "../models/product.js";
 import { extractTokenAndDecode } from "../lib/utils.js";
 import { Request, Response } from "express";
