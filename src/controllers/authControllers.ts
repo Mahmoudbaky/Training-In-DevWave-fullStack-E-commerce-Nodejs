@@ -24,7 +24,6 @@ export const registerUser = async (req: Request, res: Response) => {
         .json({ success: false, message: "User already exists" });
     }
 
-    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
