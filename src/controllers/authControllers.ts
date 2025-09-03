@@ -10,6 +10,7 @@ import { env } from "../config/env.js";
  * @param {Request} req Express request object
  * @param {Response} res Express response object
  * @returns {Promise<void>}
+ *
  */
 
 export const registerUser = async (req: Request, res: Response) => {
