@@ -168,3 +168,21 @@ export const getProductById = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getBrands = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find().select("brand -_id");
+    const brands = products.map((product) => product.brand);
+
+    res.status(200).json({
+      success: true,
+      brands: Array.from(new Set(brands)), // Unique brands
+    });
+  } catch (error) {
+    console.error("Error fetching brands:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};

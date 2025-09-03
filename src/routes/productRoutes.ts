@@ -474,4 +474,39 @@ router.get(
   productControllers.getProductById
 );
 
+/**
+ * @openapi
+ * /api/products/brands/get-all-brands:
+ *   get:
+ *     summary: Get all product brands
+ *     description: Retrieve a list of all unique product brands from the database.
+ *     tags:
+ *       - Products
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved product brands
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 brands:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   example: ["Apple", "Samsung", "Sony"]
+ *       500:
+ *         description: Internal server error
+ */
+
+router.get(
+  "/brands/get-all-brands",
+  protect,
+  authorize("user", "admin"),
+  productControllers.getBrands
+);
+
 export default router;
