@@ -19,6 +19,12 @@ const productSchema = new Schema(
       optional: true,
       trim: true,
     },
+    aboutItem: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
     price: {
       type: Number,
       required: true,
@@ -33,12 +39,6 @@ const productSchema = new Schema(
       type: Number,
       required: true,
       min: 0,
-    },
-    stars: {
-      type: Number,
-      required: true,
-      min: 0,
-      max: 5,
     },
     deliveryDate: {
       type: Date,

@@ -9,6 +9,7 @@ export const createProductValidationSchema = z.object({
   name: z.string().min(2).max(100),
   brand: z.string().min(2).max(100),
   description: z.string().min(2).max(500).optional(),
+  aboutItem: z.array(z.string().min(2).max(100)).optional(),
   price: z.number().min(0),
   category: z.string().min(2).max(100),
   stock: z.number().min(0),
@@ -19,4 +20,10 @@ export const createProductValidationSchema = z.object({
   images: z.array(z.string().min(2).max(100)).optional(),
   banner: z.string().min(2).max(100).optional(),
   isActive: z.boolean().optional(),
+});
+
+export const createFeedbackValidationSchema = z.object({
+  productId: z.string().min(2).max(100),
+  rating: z.number().min(1).max(5),
+  comment: z.string().min(2).max(500).optional(),
 });

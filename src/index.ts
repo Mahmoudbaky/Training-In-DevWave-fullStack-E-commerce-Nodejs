@@ -7,6 +7,7 @@ import {
   productRoutes,
   cartRoutes,
   orderRoutes,
+  feedbackRoutes,
 } from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
@@ -68,6 +69,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 // Setup swagger
 setupSwagger(app);
