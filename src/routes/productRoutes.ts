@@ -326,10 +326,10 @@ router.get(
  *           type: number
  *         description: Maximum price
  *       - in: query
- *         name: rating
+ *         name: stars
  *         schema:
  *           type: number
- *         description: Minimum rating (greater than or equal)
+ *         description: Minimum stars (greater than or equal)
  *       - in: query
  *         name: deliveryDay
  *         schema:
