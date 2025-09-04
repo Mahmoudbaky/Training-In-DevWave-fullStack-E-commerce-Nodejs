@@ -25,6 +25,12 @@ const envSchema = z.object({
   JWT_EXPIRES_IN: z.string().default("24h"),
   COOKIE_EXPIRES_IN: z.string().default("90d"),
 
+  // Email
+  EMAIL_SERVICE: z.string().optional(),
+  EMAIL_USER: z.string().optional(),
+  EMAIL_APP_PASSWORD: z.string().optional(),
+  EMAIL_FROM: z.string().optional(),
+
   // App settings
   APP_NAME: z.string().default("DevWave E-commerce"),
 });
