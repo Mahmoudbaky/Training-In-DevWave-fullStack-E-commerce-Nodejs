@@ -263,8 +263,7 @@ router.put(
 
 router.get(
   "/all-categories",
-  protect,
-  authorize("user", "admin"),
+
   categoryControllers.getAllCategories
 );
 

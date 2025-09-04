@@ -375,12 +375,7 @@ router.get(
  *         description: Internal server error
  */
 
-router.get(
-  "/filter",
-  protect,
-  authorize("user", "admin"),
-  productControllers.filterProducts
-);
+router.get("/filter", productControllers.filterProducts);
 
 /**
  * @openapi
@@ -467,12 +462,7 @@ router.get(
  *                   example: Internal server error
  */
 
-router.get(
-  "/:id",
-  protect,
-  authorize("user", "admin"),
-  productControllers.getProductById
-);
+router.get("/:id", productControllers.getProductById);
 
 /**
  * @openapi
@@ -502,11 +492,6 @@ router.get(
  *         description: Internal server error
  */
 
-router.get(
-  "/brands/get-all-brands",
-  protect,
-  authorize("user", "admin"),
-  productControllers.getBrands
-);
+router.get("/brands/get-all-brands", productControllers.getBrands);
 
 export default router;
