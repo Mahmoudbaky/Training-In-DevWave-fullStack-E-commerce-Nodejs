@@ -73,7 +73,7 @@ export const router = express.Router();
 router.post("/register", authController.registerUser);
 
 /**
- * @swagger
+ * @openapi
  * /api/auth/login:
  *   post:
  *     summary: Login user with email (OTP will be sent)
@@ -150,7 +150,7 @@ router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
 
 /**
- * @swagger
+ * @openapi
  * /api/auth/verify-login-otp:
  *   post:
  *     summary: Verify OTP and log in the user
