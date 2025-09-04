@@ -14,6 +14,16 @@ import cors from "cors";
 import { setupSwagger } from "./config/swagger.js";
 
 dotenv.config();
+
+await mongoose
+  .connect(env.MONGODB_URI as string)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
+
 const app = express();
 
 // CORS configuration
@@ -60,54 +70,34 @@ const corsOptions = {
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-// Function to start the server
-async function startServer() {
-  try {
-    // Connect to MongoDB first
-    await mongoose.connect(env.MONGODB_URI as string);
-    console.log("Connected to MongoDB");
+app.use(cors(corsOptions));
+app.use(express.json());
 
-    const app = express();
+// API routes
+app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
-    app.use(cors(corsOptions));
-    app.use(express.json());
+// Setup swagger
+setupSwagger(app);
 
-    // API routes - only set up after DB connection
-    app.use("/api/auth", authRoutes);
-    app.use("/api/categories", categoryRoutes);
-    app.use("/api/products", productRoutes);
-    app.use("/api/cart", cartRoutes);
-    app.use("/api/orders", orderRoutes);
-    app.use("/api/feedback", feedbackRoutes);
+// Health check endpoint
+app.get("/api/health", (req, res) => {
+  res.json({ status: "OK", message: "Server is healthy" });
+});
 
-    // Setup swagger
-    setupSwagger(app);
+// Handle 404 - catch all unmatched routes
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Not Found, please use a valid endpoint",
+  });
+});
 
-    // Health check endpoint
-    app.get("/api/health", (req, res) => {
-      res.json({ status: "OK", message: "Server is healthy" });
-    });
+app.listen(env.PORT, () => {
+  console.log(`Server is running on port ${env.PORT}`);
+});
 
-    // Handle 404 - catch all unmatched routes
-    app.use((req, res) => {
-      res.status(404).json({
-        error: "Not Found, please use a valid endpoint",
-      });
-    });
-
-    // Start the server only after DB connection is established
-    app.listen(env.PORT, () => {
-      console.log(`Server is running on port ${env.PORT}`);
-    });
-
-    return app;
-  } catch (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
-}
-
-// Start the server
-startServer();
-
-export default startServer;
+export default app;
