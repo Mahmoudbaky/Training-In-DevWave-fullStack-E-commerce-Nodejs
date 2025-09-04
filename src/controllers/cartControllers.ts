@@ -44,6 +44,7 @@ export const getCart = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error retrieving cart",
+      error,
     });
   }
 };
@@ -122,6 +123,7 @@ export const addToCart = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error adding item to cart",
+      error,
     });
   }
 };
@@ -183,6 +185,7 @@ export const updateCartItem = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error updating cart item",
+      error,
     });
   }
 };
@@ -229,6 +232,7 @@ export const removeFromCart = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error removing item from cart",
+      error,
     });
   }
 };
@@ -270,6 +274,7 @@ export const clearCart = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error clearing cart",
+      error,
     });
   }
 };

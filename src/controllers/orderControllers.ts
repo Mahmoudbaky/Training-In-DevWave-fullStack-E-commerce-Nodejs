@@ -86,6 +86,7 @@ export const createOrder = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error creating order",
+      error,
     });
   }
 };
@@ -133,6 +134,7 @@ export const getUserOrders = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error retrieving orders",
+      error,
     });
   }
 };
@@ -172,6 +174,7 @@ export const getOrderById = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error retrieving order",
+      error,
     });
   }
 };
@@ -222,6 +225,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error cancelling order",
+      error,
     });
   }
 };
@@ -284,6 +288,7 @@ export const getAllOrders = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error retrieving orders",
+      error,
     });
   }
 };
@@ -342,6 +347,7 @@ export const updateOrderStatus = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error updating order status",
+      error,
     });
   }
 };
@@ -392,6 +398,7 @@ export const getOrderStats = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Error retrieving order statistics",
+      error,
     });
   }
 };

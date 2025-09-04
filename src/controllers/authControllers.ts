@@ -40,7 +40,9 @@ export const registerUser = async (req: Request, res: Response) => {
       .json({ success: true, message: "User registered successfully" });
   } catch (error) {
     console.error("Error registering user:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
   }
 };
 
@@ -98,7 +100,9 @@ export const loginUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Error logging in user:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
   }
 };
 
@@ -176,6 +180,8 @@ export const verifyOtpAndLogin = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Error logging in user:", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+    res
+      .status(500)
+      .json({ success: false, message: "Internal server error", error });
   }
 };

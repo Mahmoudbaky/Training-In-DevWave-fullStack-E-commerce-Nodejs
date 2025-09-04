@@ -27,6 +27,7 @@ export const createProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -68,6 +69,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -93,6 +95,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -140,6 +143,7 @@ export const filterProducts = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -165,6 +169,7 @@ export const getProductById = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -183,6 +188,7 @@ export const getBrands = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };

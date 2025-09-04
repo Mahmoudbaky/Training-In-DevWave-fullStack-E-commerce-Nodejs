@@ -34,6 +34,7 @@ export const createCategory = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -83,6 +84,7 @@ export const updateCategory = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
@@ -105,6 +107,7 @@ export const getAllCategories = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       message: "Internal server error",
+      error,
     });
   }
 };
