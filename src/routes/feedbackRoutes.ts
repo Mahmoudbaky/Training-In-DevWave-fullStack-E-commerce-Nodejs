@@ -130,8 +130,8 @@ router.put(
 
 /**
  * @openapi
- * /api/feedback/user-product-feedback:
- *   post:
+ * /api/feedback/user-product-feedback/{productId}:
+ *   get:
  *     summary: Get user feedback for a specific product
  *     description: Retrieves the authenticated user's feedback for a given product.
  *     tags:
@@ -173,7 +173,7 @@ router.put(
  */
 
 router.get(
-  "/user-product-feedback",
+  "/user-product-feedback/:productId",
   protect,
   authorize("user", "admin"),
   feedbackControllers.getUserFeedbackForProduct
@@ -181,8 +181,8 @@ router.get(
 
 /**
  * @openapi
- * /api/feedback/product-feedback-stats:
- *   post:
+ * /api/feedback/product-feedback-stats/{productId}:
+ *   get:
  *     summary: Get detailed feedback statistics for a product
  *     description: Returns the average rating, total reviews, and count of each star rating (1–5) for a given product.
  *     tags:
@@ -246,9 +246,7 @@ router.get(
  */
 
 router.get(
-  "/product-feedback-stats",
-  protect,
-  authorize("user", "admin"),
+  "/product-feedback-stats/:productId",
   feedbackControllers.feedbackStatsForProduct
 );
 export default router;

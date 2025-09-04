@@ -104,7 +104,7 @@ export const getUserFeedbackForProduct = async (
     }
 
     const userId = decoded.id;
-    const { productId } = req.body;
+    const { productId } = req.params;
 
     const feedback = await Feedback.findOne({
       user: userId,
@@ -131,7 +131,7 @@ export const getUserFeedbackForProduct = async (
 
 export const feedbackStatsForProduct = async (req: Request, res: Response) => {
   try {
-    const { productId } = req.body;
+    const { productId } = req.params;
     // get feedback stats for a specific product
     const result = await Feedback.aggregate([
       {
