@@ -60,42 +60,54 @@ const corsOptions = {
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-app.use(cors(corsOptions));
-app.use(express.json());
+// Function to start the server
+async function startServer() {
+  try {
+    // Connect to MongoDB first
+    await mongoose.connect(env.MONGODB_URI as string);
+    console.log("Connected to MongoDB");
 
-// API routes
-app.use("/api/auth", authRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/feedback", feedbackRoutes);
+    const app = express();
 
-// Setup swagger
-setupSwagger(app);
+    app.use(cors(corsOptions));
+    app.use(express.json());
 
-// Health check endpoint
-app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", message: "Server is healthy" });
-});
+    // API routes - only set up after DB connection
+    app.use("/api/auth", authRoutes);
+    app.use("/api/categories", categoryRoutes);
+    app.use("/api/products", productRoutes);
+    app.use("/api/cart", cartRoutes);
+    app.use("/api/orders", orderRoutes);
+    app.use("/api/feedback", feedbackRoutes);
 
-// Handle 404 - catch all unmatched routes
-app.use((req, res) => {
-  res.status(404).json({
-    error: "Not Found, please use a valid endpoint",
-  });
-});
+    // Setup swagger
+    setupSwagger(app);
 
-mongoose
-  .connect(env.MONGODB_URI as string)
-  .then(() => {
+    // Health check endpoint
+    app.get("/api/health", (req, res) => {
+      res.json({ status: "OK", message: "Server is healthy" });
+    });
+
+    // Handle 404 - catch all unmatched routes
+    app.use((req, res) => {
+      res.status(404).json({
+        error: "Not Found, please use a valid endpoint",
+      });
+    });
+
+    // Start the server only after DB connection is established
     app.listen(env.PORT, () => {
-      console.log("Connected to MongoDB");
       console.log(`Server is running on port ${env.PORT}`);
     });
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
 
-export default app;
+    return app;
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
+// Start the server
+startServer();
+
+export default startServer;
