@@ -20,6 +20,9 @@ const envSchema = z.object({
 
   SWAGGER_BASE_URL: z.string().default("http://localhost:3000/api"),
 
+  // Uploadthing
+  UPLOADTHING_TOKEN: z.string(),
+
   // Authentication
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.string().default("24h"),

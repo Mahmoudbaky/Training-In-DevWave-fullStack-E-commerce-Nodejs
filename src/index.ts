@@ -12,6 +12,8 @@ import {
 import { env } from "./config/env.js";
 import cors from "cors";
 import { setupSwagger } from "./config/swagger.js";
+import { createRouteHandler } from "uploadthing/express";
+import { uploadRouter } from "./config/uploadthing.js";
 
 dotenv.config();
 
@@ -80,6 +82,15 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/feedback", feedbackRoutes);
+
+// Uploadthing routes
+app.use(
+  "/api/uploadthing",
+  createRouteHandler({
+    router: uploadRouter,
+    config: { token: env.UPLOADTHING_TOKEN },
+  })
+);
 
 // Setup swagger
 setupSwagger(app);
