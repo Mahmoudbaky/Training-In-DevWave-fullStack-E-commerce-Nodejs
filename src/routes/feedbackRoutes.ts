@@ -181,6 +181,80 @@ router.get(
 
 /**
  * @openapi
+ * /api/feedback/product-feedback/{productId}:
+ *   get:
+ *     summary: Get all feedbacks for a product
+ *     description: Retrieve all user feedbacks for a specific product, including user details (name and email).
+ *     tags:
+ *       - Feedback
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the product to fetch feedbacks for
+ *         example: 64f82bcf2f9b9a3e88e4a123
+ *     responses:
+ *       200:
+ *         description: List of feedbacks for the product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 feedbacks:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                         example: 64f82cd72f9b9a3e88e4a456
+ *                       rating:
+ *                         type: number
+ *                         example: 4
+ *                       comment:
+ *                         type: string
+ *                         example: "Great product, highly recommend!"
+ *                       user:
+ *                         type: object
+ *                         properties:
+ *                           _id:
+ *                             type: string
+ *                             example: 64f82bd22f9b9a3e88e4a789
+ *                           name:
+ *                             type: string
+ *                             example: John Doe
+ *                           email:
+ *                             type: string
+ *                             example: johndoe@example.com
+ *       500:
+ *         description: Error fetching feedbacks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Error fetching feedbacks"
+ */
+
+router.get(
+  "/product-feedback/:productId",
+  feedbackControllers.getAllFeedbacksForProduct
+);
+
+/**
+ *
+ * @openapi
  * /api/feedback/product-feedback-stats/{productId}:
  *   get:
  *     summary: Get detailed feedback statistics for a product

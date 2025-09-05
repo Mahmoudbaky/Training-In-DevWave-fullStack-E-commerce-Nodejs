@@ -129,6 +129,28 @@ export const getUserFeedbackForProduct = async (
   }
 };
 
+export const getAllFeedbacksForProduct = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { productId } = req.params;
+    const feedbacks = await Feedback.find({ product: productId }).populate(
+      "user",
+      "name email"
+    );
+
+    res.status(200).json({
+      success: true,
+      feedbacks,
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error fetching feedbacks", error });
+  }
+};
+
 export const feedbackStatsForProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
