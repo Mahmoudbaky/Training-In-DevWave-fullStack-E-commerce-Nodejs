@@ -66,9 +66,7 @@ export const loginUser = async (req: Request, res: Response) => {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid email or password" });
+      return res.status(400).json({ success: false, message: "Invalid email" });
     }
 
     // Generate OTP
