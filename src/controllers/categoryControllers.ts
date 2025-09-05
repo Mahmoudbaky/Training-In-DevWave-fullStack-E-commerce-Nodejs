@@ -15,6 +15,8 @@ export const createCategory = async (req: Request, res: Response) => {
       req.body
     );
 
+    console.log("Validation Response:", validationResponse);
+
     if (!validationResponse.success) {
       return res.status(400).json({
         success: false,
@@ -104,6 +106,30 @@ export const getAllCategories = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Error fetching categories:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error,
+    });
+  }
+};
+
+export const deleteCategory = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedCategory = await Category.findByIdAndDelete(id);
+    if (!deletedCategory) {
+      return res.status(404).json({
+        success: false,
+        message: "Category not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Category deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting category:", error);
     res.status(500).json({
       success: false,
       message: "Internal server error",

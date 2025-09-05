@@ -261,10 +261,71 @@ router.put(
  *                   example: Internal server error
  */
 
-router.get(
-  "/all-categories",
+router.get("/all-categories", categoryControllers.getAllCategories);
 
-  categoryControllers.getAllCategories
+/**
+ * @openapi
+ * /api/categories/delete/{id}:
+ *   delete:
+ *     summary: Delete a category
+ *     description: Deletes a category by its ID.
+ *     tags:
+ *       - Categories
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the category to delete
+ *         example: 64f82bcf2f9b9a3e88e4a123
+ *     responses:
+ *       200:
+ *         description: Category deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: "Category deleted successfully"
+ *       404:
+ *         description: Category not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Category not found"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+
+router.delete(
+  "/delete/:id",
+  protect,
+  authorize("admin"),
+  categoryControllers.deleteCategory
 );
 
 export default router;
