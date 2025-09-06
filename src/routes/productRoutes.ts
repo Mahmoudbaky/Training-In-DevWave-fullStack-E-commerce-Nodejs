@@ -494,4 +494,46 @@ router.get("/:id", productControllers.getProductById);
 
 router.get("/brands/get-all-brands", productControllers.getBrands);
 
+/**
+ * @swagger
+ * /api/products/delete/{id}:
+ *   delete:
+ *     summary: Delete a product
+ *     description: Delete a product by its unique ID.
+ *     tags:
+ *       - Products
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the product
+ *     responses:
+ *       200:
+ *         description: Product deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Product deleted successfully
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ */
+
+router.delete(
+  "/delete/:id",
+  protect,
+  authorize("admin"),
+  productControllers.deleteProduct
+);
+
 export default router;
