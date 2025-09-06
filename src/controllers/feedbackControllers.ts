@@ -6,6 +6,26 @@ import { createFeedbackValidationSchema } from "../lib/validators.js";
 import { ObjectId } from "mongodb";
 import mongoose, { mongo } from "mongoose";
 
+interface Feedback {
+  _id: ObjectId;
+  user: {
+    _id: ObjectId;
+    email: string;
+    userName: string;
+  };
+  product: ObjectId;
+  rating: number;
+  comment?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface User {
+  _id: ObjectId;
+  email: string;
+  userName: string;
+}
+
 export const createFeedback = async (req: Request, res: Response) => {
   try {
     const decoded = extractTokenAndDecode(req as Request);
@@ -137,12 +157,37 @@ export const getAllFeedbacksForProduct = async (
     const { productId } = req.params;
     const feedbacks = await Feedback.find({ product: productId }).populate(
       "user",
-      "name email"
+      "email"
     );
+
+    const reformattedFeedbacks: Feedback[] = feedbacks.map((fb: any) => {
+      const user = fb.user;
+      return {
+        _id: fb._id,
+        user: user
+          ? {
+              _id: user._id,
+              email: user.email,
+              userName: user.email ? user.email.split("@")[0] : "",
+            }
+          : {
+              _id: null,
+              email: "",
+              userName: "",
+            },
+        product: fb.product,
+        rating: fb.rating,
+        comment: fb.comment,
+        createdAt: fb.createdAt,
+        updatedAt: fb.updatedAt,
+      };
+    });
+
+    console.log(reformattedFeedbacks);
 
     res.status(200).json({
       success: true,
-      feedbacks,
+      feedbacks: reformattedFeedbacks, // <-- Use the reformatted array here
     });
   } catch (error) {
     res
@@ -175,9 +220,32 @@ export const feedbackStatsForProduct = async (req: Request, res: Response) => {
       },
     ]);
 
+    const reformattedResult = result.map((res) => ({
+      productId: res._id,
+      averageRating: Number(res.averageRating.toFixed(1)),
+      totalReviews: res.totalReviews,
+      oneStar: Number(
+        ((res.oneStar / Number(res.totalReviews)) * 100).toFixed(1)
+      ),
+      twoStar: Number(
+        ((res.twoStar / Number(res.totalReviews)) * 100).toFixed(1)
+      ),
+      threeStar: Number(
+        ((res.threeStar / Number(res.totalReviews)) * 100).toFixed(1)
+      ),
+      fourStar: Number(
+        ((res.fourStar / Number(res.totalReviews)) * 100).toFixed(1)
+      ),
+      fiveStar: Number(
+        ((res.fiveStar / Number(res.totalReviews)) * 100).toFixed(1)
+      ),
+    }));
+
+    console.log(reformattedResult[0]);
+
     res.status(200).json({
       success: true,
-      stats: result,
+      stats: reformattedResult[0],
     });
   } catch (error) {
     res.status(500).json({
@@ -187,39 +255,3 @@ export const feedbackStatsForProduct = async (req: Request, res: Response) => {
     });
   }
 };
-
-// export const deleteFeedback = async (req: Request, res: Response) => {
-//   try {
-//     const decoded = extractTokenAndDecode(req as Request);
-
-//     if (!decoded) {
-//       return res.status(401).json({
-//         message: "Not authorized to access this route",
-//       });
-//     }
-
-//     const userId = decoded.id;
-//     const { productId } = req.body;
-
-//     const existingFeedback = await Feedback.findOne({
-//       user: userId,
-//       product: productId,
-//     });
-
-//     if (!existingFeedback) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Feedback not found",
-//       });
-//     }
-
-//     await existingFeedback.remove();
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Feedback deleted successfully",
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: "Error deleting feedback", error });
-//   }
-// };
