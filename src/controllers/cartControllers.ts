@@ -202,7 +202,7 @@ export const removeFromCart = async (req: Request, res: Response) => {
     }
 
     const userId = decoded.id;
-    const { productId } = req.body;
+    const { productId } = req.params;
 
     const cart = await Cart.findOne({ user: userId });
 

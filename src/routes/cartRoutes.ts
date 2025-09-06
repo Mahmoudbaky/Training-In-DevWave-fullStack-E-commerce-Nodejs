@@ -371,7 +371,7 @@ router.put(
 
 /**
  * @openapi
- * /api/cart/remove-from-cart:
+ * /api/cart/remove-from-cart/{productId}:
  *   delete:
  *     summary: Remove an item from the cart
  *     tags:
@@ -481,7 +481,7 @@ router.put(
  */
 
 router.delete(
-  "/remove-from-cart",
+  "/remove-from-cart/:productId",
   protect,
   authorize("user", "admin"),
   cartController.removeFromCart
