@@ -328,4 +328,55 @@ router.delete(
   categoryControllers.deleteCategory
 );
 
+/**
+ * @swagger
+ * /api/categories/{id}:
+ *   get:
+ *     summary: Get category by ID
+ *     description: Retrieve a single category by its unique ID.
+ *     tags:
+ *       - Categories
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the category
+ *     responses:
+ *       200:
+ *         description: Category retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 category:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: 64f82bcf2f9b9a3e88e4a123
+ *                     name:
+ *                       type: string
+ *                       example: Electronics
+ *                     description:
+ *                       type: string
+ *                       example: Devices and gadgets
+ *       404:
+ *         description: Category not found
+ *       500:
+ *         description: Internal server error
+ */
+
+router.get(
+  "/:id",
+  protect,
+  authorize("admin"),
+  categoryControllers.getCategoryById
+);
+
 export default router;

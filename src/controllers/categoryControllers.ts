@@ -114,6 +114,30 @@ export const getAllCategories = async (req: Request, res: Response) => {
   }
 };
 
+export const getCategoryById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const category = await Category.findById(id);
+    if (!category) {
+      return res.status(404).json({
+        success: false,
+        message: "Category not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      category,
+    });
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error,
+    });
+  }
+};
+
 export const deleteCategory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
