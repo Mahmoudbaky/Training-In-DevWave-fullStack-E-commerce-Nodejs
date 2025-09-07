@@ -69,7 +69,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const filters: any = {};
 
     if (searchTerm) {
-      filters.email = { $regex: searchTerm, $options: "i" }; // Case-insensitive search
+      filters.email = { $regex: `^${searchTerm}`, $options: "i" }; // Case-insensitive searchsearchTerm`, $options: "i" }; // Case-insensitive search
     }
 
     const total = await User.countDocuments(filters);
