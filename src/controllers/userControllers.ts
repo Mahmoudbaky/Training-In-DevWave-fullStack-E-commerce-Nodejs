@@ -1,6 +1,7 @@
 import User from "../models/user.js";
 import { Request, Response } from "express";
 import { extractTokenAndDecode } from "../lib/utils.js";
+import { email } from "zod";
 
 /**
  * Retrieves the user profile associated with the given JWT token
@@ -61,10 +62,28 @@ export const updateUserProfile = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.find();
-    res.status(200).json({ success: true, data: users });
+    const { searchTerm = "", page = 1, limit = 10 } = req.query;
+
+    const filters: any = {};
+
+    if (searchTerm) {
+      filters.email = { $regex: searchTerm, $options: "i" }; // Case-insensitive search
+    }
+
+    const total = await User.countDocuments(filters);
+
+    const users = await User.find(filters)
+      .skip((Number(page) - 1) * Number(limit))
+      .limit(Number(limit));
+    res.status(200).json({
+      success: true,
+      data: users,
+      total,
+      page,
+      pages: Math.ceil(total / Number(limit)),
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -86,6 +105,22 @@ export const updateUserRole = async (req: Request, res: Response) => {
     user.role = role;
     await user.save();
 
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
     res.status(200).json({ success: true, data: user });
   } catch (error) {
     console.error(error);
