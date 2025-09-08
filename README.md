@@ -11,7 +11,7 @@ A full-stack e-commerce backend built with Node.js, Express, TypeScript, and Mon
 - **Order Management**: Place orders, view order history, admin order controls
 - **Feedback System**: Product reviews and ratings
 - **File Uploads**: Integrated with Uploadthing
-- **Swagger API Documentation**: Interactive docs at `/api-docs`
+- **Swagger API Documentation**: Interactive docs at `/docs`
 - **Environment-based Config**: `.env.development` and `.env.production` support
 
 ## Tech Stack
@@ -72,7 +72,7 @@ The server will run on `http://localhost:3000` by default.
 ## API Documentation
 
 Swagger UI is available at:  
-`http://localhost:3000/api-docs`
+`http://localhost:3000/docs`
 
 ## Project Structure
 
