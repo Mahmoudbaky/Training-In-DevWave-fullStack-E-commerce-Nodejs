@@ -5,3 +5,4 @@ export { default as cartRoutes } from "./cartRoutes.js";
 export { default as orderRoutes } from "./orderRoutes.js";
 export { default as feedbackRoutes } from "./feedbackRoutes.js";
 export { default as userRoutes } from "./userRoutes.js";
+export { default as wishlistRoutes } from "./wishlistRoutes.js";

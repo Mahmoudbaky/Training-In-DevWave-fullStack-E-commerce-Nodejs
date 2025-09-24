@@ -105,6 +105,7 @@ export const filterProducts = async (req: Request, res: Response) => {
     const {
       category,
       brand,
+      searchTerm,
       minPrice,
       maxPrice,
       stars,
@@ -122,6 +123,12 @@ export const filterProducts = async (req: Request, res: Response) => {
       if (maxPrice) filters.price.$lte = Number(maxPrice);
     }
     if (stars) filters.stars = { $gte: Number(stars) };
+    if (searchTerm) {
+      filters.$or = [
+        { name: { $regex: searchTerm, $options: "i" } },
+        { description: { $regex: searchTerm, $options: "i" } },
+      ];
+    }
 
     const skip = (Number(page) - 1) * Number(limit);
 

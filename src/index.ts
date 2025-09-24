@@ -9,6 +9,7 @@ import {
   orderRoutes,
   feedbackRoutes,
   userRoutes,
+  wishlistRoutes,
 } from "./routes/index.js";
 import { env } from "./config/env.js";
 import cors from "cors";
@@ -85,6 +86,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 // Uploadthing routes
 app.use(
