@@ -172,14 +172,12 @@ export const updateCartItem = async (req: Request, res: Response) => {
     cart.items[itemIndex].quantity = quantity;
     await cart.save();
 
-    const updatedCart = await Cart.findById(cart._id)
-      .populate("items.product", "name price image")
-      .exec();
+    const newCart = await cart.populate("items.product", "name price images");
 
     res.status(200).json({
       success: true,
       message: "Cart item updated successfully",
-      data: updatedCart,
+      data: newCart,
     });
   } catch (error) {
     res.status(500).json({
@@ -224,9 +222,12 @@ export const removeFromCart = async (req: Request, res: Response) => {
 
     await cart.save();
 
+    const newCart = await cart.populate("items.product", "name price images");
+
     res.status(200).json({
       success: true,
       message: "Item removed from cart successfully",
+      data: newCart,
     });
   } catch (error) {
     res.status(500).json({
