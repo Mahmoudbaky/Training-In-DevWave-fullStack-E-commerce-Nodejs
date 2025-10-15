@@ -204,8 +204,6 @@ export const removeFromCart = async (req: Request, res: Response) => {
 
     const cart = await Cart.findOne({ user: userId });
 
-    console.log("Cart found:", cart);
-
     if (!cart) {
       return res.status(404).json({
         success: false,

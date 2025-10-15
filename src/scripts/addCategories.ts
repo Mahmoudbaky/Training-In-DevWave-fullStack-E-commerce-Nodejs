@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 import Category from "../models/category.js";
+import { MONGODB_URI } from "../lib/constants.js";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://mahmoudsaleh3478y7:qDC4xfMnDZ5i3F3g@cluster0.xoowpfo.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=DevWaveEcommerce"
-    );
+    await mongoose.connect(MONGODB_URI);
     console.log("MongoDB Connected");
   } catch (err) {
     console.error("Database connection error:", err);
@@ -14,17 +13,27 @@ const connectDB = async () => {
 };
 
 const categoriesToAdd = [
-  { name: "Books", description: "Read and learn" },
-  { name: "Home & Kitchen", description: "Essentials for your home" },
-  { name: "Sports & Outdoors", description: "Gear for your adventures" },
-  { name: "Toys & Games", description: "Fun for all ages" },
-  { name: "Health & Personal Care", description: "Wellness products" },
-  { name: "Automotive", description: "Car accessories and parts" },
-  { name: "Garden & Outdoor", description: "Tools and decor for your garden" },
-  { name: "Pet Supplies", description: "Everything for your pets" },
-  { name: "Office Supplies", description: "Essentials for your workspace" },
-  { name: "Baby Products", description: "Items for infants and toddlers" },
-  { name: "Musical Instruments", description: "Instruments and accessories" },
+  {
+    name: "Men's Sportswear",
+    description:
+      "Performance-driven apparel and footwear designed for men’s active lifestyle.",
+  },
+  {
+    name: "Women's Sportswear",
+    description:
+      "Stylish and functional activewear tailored for women’s fitness and training.",
+  },
+  {
+    name: "Running Shoes",
+    description:
+      "High-performance running shoes offering comfort and durability.",
+  },
+  {
+    name: "Fitness Accessories",
+    description:
+      "Essential accessories for workouts including gloves, bottles, and gym bags.",
+  },
+  { name: "Sports Equipment", description: "Sports Equipment" },
 ];
 const addCategories = async () => {
   try {

@@ -183,8 +183,6 @@ export const getAllFeedbacksForProduct = async (
       };
     });
 
-    console.log(reformattedFeedbacks);
-
     res.status(200).json({
       success: true,
       feedbacks: reformattedFeedbacks, // <-- Use the reformatted array here
@@ -240,8 +238,6 @@ export const feedbackStatsForProduct = async (req: Request, res: Response) => {
         ((res.fiveStar / Number(res.totalReviews)) * 100).toFixed(1)
       ),
     }));
-
-    console.log(reformattedResult[0]);
 
     res.status(200).json({
       success: true,

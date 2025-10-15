@@ -169,7 +169,8 @@ export const getProductById = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      product,
+      message: "Products fetched",
+      data: product,
     });
   } catch (error) {
     console.error("Error fetching product:", error);
@@ -218,6 +219,43 @@ export const deleteProduct = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error("Error deleting product:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error,
+    });
+  }
+};
+
+export const getNewProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find().sort({ createdAt: -1 }).limit(4);
+
+    res.status(200).json({
+      success: true,
+      message: "New products fetched successfully",
+      data: products,
+    });
+  } catch (error) {
+    console.error("Error fetching new products:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error,
+    });
+  }
+};
+
+export const getMostOrderedProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await Product.find().sort({ orders: -1 }).limit(4);
+    res.status(200).json({
+      success: true,
+      message: "Most ordered products fetched successfully",
+      products,
+    });
+  } catch (error) {
+    console.error("Error fetching most ordered products:", error);
     res.status(500).json({
       success: false,
       message: "Internal server error",

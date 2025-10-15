@@ -15,8 +15,6 @@ export const createCategory = async (req: Request, res: Response) => {
       req.body
     );
 
-    console.log("Validation Response:", validationResponse);
-
     if (!validationResponse.success) {
       return res.status(400).json({
         success: false,
@@ -102,7 +100,8 @@ export const getAllCategories = async (req: Request, res: Response) => {
     const categories = await Category.find();
     res.status(200).json({
       success: true,
-      categories,
+      message: "categories fetched",
+      data: categories,
     });
   } catch (error) {
     console.error("Error fetching categories:", error);
