@@ -16,15 +16,19 @@ const orderSchema = new Schema(
       required: true,
       min: 0,
     },
+    paymentMethod: {
+      type: String,
+      enum: ["CashOnDelivery", "Stripe"],
+      default: "CashOnDelivery",
+    },
     status: {
       type: String,
       enum: ["pending", "completed", "cancelled"],
       default: "pending",
     },
     shippingAddress: {
-      type: String,
+      type: Schema.Types.Mixed,
       required: true,
-      trim: true,
     },
   },
   { timestamps: true }
