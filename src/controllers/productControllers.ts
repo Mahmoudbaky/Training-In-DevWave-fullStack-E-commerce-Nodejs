@@ -134,13 +134,15 @@ export const filterProducts = async (req: Request, res: Response) => {
 
     const products = await Product.find(filters)
       .skip(skip)
-      .limit(Number(limit));
+      .limit(Number(limit))
+      .populate("category", "name -_id");
 
     const total = await Product.countDocuments(filters);
 
     res.status(200).json({
       success: true,
-      products,
+      message: "Products filtered successfully",
+      data: products,
       total,
       page: Number(page),
       pages: Math.ceil(total / Number(limit)),
@@ -189,7 +191,8 @@ export const getBrands = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      brands: Array.from(new Set(brands)), // Unique brands
+      message: "Brands fetched successfully",
+      data: Array.from(new Set(brands)), // Unique brands
     });
   } catch (error) {
     console.error("Error fetching brands:", error);
