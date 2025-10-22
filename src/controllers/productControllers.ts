@@ -8,6 +8,8 @@ export const createProduct = async (req: Request, res: Response) => {
       req.body
     );
 
+    console.log(validationResponse);
+
     if (!validationResponse.success) {
       return res.status(400).json({
         success: false,
@@ -38,6 +40,8 @@ export const updateProduct = async (req: Request, res: Response) => {
     const validationResponse = createProductValidationSchema.safeParse(
       req.body
     );
+
+    console.log(validationResponse);
 
     if (!validationResponse.success) {
       return res.status(400).json({
@@ -85,7 +89,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      products,
+      data: products,
       total,
       page,
       pages: Math.ceil(total / limit),

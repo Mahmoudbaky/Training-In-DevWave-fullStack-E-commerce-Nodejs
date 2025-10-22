@@ -13,12 +13,9 @@ export const createProductValidationSchema = z.object({
   price: z.number().min(0),
   category: z.string().min(2).max(100),
   stock: z.number().min(0),
-  stars: z.number().min(0).max(5),
-  deliveryDate: z.string().datetime(),
   discount: z.number().min(0).max(100),
-  saleRate: z.number().min(0).max(5000),
   images: z.array(z.string().min(2).max(100)).optional(),
-  banner: z.string().min(2).max(100).optional(),
+  banner: z.string().min(2).max(500).or(z.literal("")).optional(),
   isActive: z.boolean().optional(),
 });
 

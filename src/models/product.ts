@@ -42,17 +42,17 @@ const productSchema = new Schema(
     },
     deliveryDate: {
       type: Date,
-      required: true,
+      optional: true,
     },
     discount: {
       type: Number,
-      required: true,
+      optional: true,
       min: 0,
       max: 100,
     },
     saleRate: {
       type: Number,
-      required: true,
+      optional: true,
       min: 0,
       max: 5000,
     },

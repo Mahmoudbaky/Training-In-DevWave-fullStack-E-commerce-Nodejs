@@ -108,9 +108,9 @@ export const router = express.Router();
  */
 
 router.post(
-  "/create",
-  // protect,
-  // authorize("user", "admin"),
+  "/create-product",
+  protect,
+  authorize("user", "admin"),
   productControllers.createProduct
 );
 
