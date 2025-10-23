@@ -28,6 +28,8 @@ const envSchema = z.object({
   JWT_EXPIRES_IN: z.string().default("24h"),
   COOKIE_EXPIRES_IN: z.string().default("90d"),
 
+  TAX_RATE: z.string().default("0.15"),
+
   // Email
   EMAIL_SERVICE: z.string().optional(),
   EMAIL_USER: z.string().optional(),

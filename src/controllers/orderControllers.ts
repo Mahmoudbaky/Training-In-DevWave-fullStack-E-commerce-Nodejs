@@ -16,7 +16,7 @@ export const createOrder = async (req: Request, res: Response) => {
     }
 
     const userId = decoded.id;
-    const { shippingAddress } = req.body;
+    const { shippingAddress, paymentMethod } = req.body;
 
     if (!shippingAddress) {
       return res.status(400).json({
@@ -60,6 +60,7 @@ export const createOrder = async (req: Request, res: Response) => {
       items: orderItems,
       totalAmount: cart.totalAmount,
       shippingAddress,
+      paymentMethod,
       status: "pending",
     });
 
@@ -154,7 +155,7 @@ export const getOrderById = async (req: Request, res: Response) => {
     const { orderId } = req.params;
 
     const order = await Order.findOne({ _id: orderId, user: userId })
-      .populate("items.product", "name price image description")
+      .populate("items.product", "name price images description")
       .populate("user", "email")
       .exec();
 
