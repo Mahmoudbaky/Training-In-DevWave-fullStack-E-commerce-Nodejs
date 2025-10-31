@@ -58,6 +58,9 @@ export const createOrder = async (req: Request, res: Response) => {
     const order = new Order({
       user: userId,
       items: orderItems,
+      subtotal: cart.subtotal,
+      shippingFee: cart.shippingFee,
+      taxAmount: cart.taxAmount,
       totalAmount: cart.totalAmount,
       shippingAddress,
       paymentMethod,

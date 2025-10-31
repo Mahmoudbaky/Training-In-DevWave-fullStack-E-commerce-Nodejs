@@ -11,6 +11,24 @@ const orderSchema = new Schema(
       required: true,
     },
     items: [OrderItem.schema],
+    subtotal: {
+      type: Number,
+      required: true,
+      default: 0,
+      min: 0,
+    },
+    shippingFee: {
+      type: Number,
+      required: true,
+      default: 0,
+      min: 0,
+    },
+    taxAmount: {
+      type: Number,
+      required: true,
+      default: 0,
+      min: 0,
+    },
     totalAmount: {
       type: Number,
       required: true,

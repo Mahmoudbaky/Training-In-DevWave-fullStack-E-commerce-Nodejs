@@ -157,7 +157,7 @@ export const getAllFeedbacksForProduct = async (
     const { productId } = req.params;
     const feedbacks = await Feedback.find({ product: productId }).populate(
       "user",
-      "email"
+      "email userName userImage"
     );
 
     const reformattedFeedbacks: Feedback[] = feedbacks.map((fb: any) => {
@@ -168,12 +168,14 @@ export const getAllFeedbacksForProduct = async (
           ? {
               _id: user._id,
               email: user.email,
-              userName: user.email ? user.email.split("@")[0] : "",
+              userName: user.userName,
+              userImage: user.userImage,
             }
           : {
               _id: null,
               email: "",
               userName: "",
+              userImage: "",
             },
         product: fb.product,
         rating: fb.rating,

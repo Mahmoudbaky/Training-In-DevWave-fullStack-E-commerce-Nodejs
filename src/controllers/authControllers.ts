@@ -17,7 +17,7 @@ import { OtpUtils } from "../lib/utils.js";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, userName } = req.body;
 
     // check if user already exists
     const existingUser = await User.findOne({ email });
@@ -33,6 +33,7 @@ export const registerUser = async (req: Request, res: Response) => {
     await User.create({
       email,
       password: hashedPassword,
+      userName,
     });
 
     res
