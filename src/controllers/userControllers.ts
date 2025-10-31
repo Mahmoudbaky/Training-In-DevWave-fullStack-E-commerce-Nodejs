@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import { Request, Response } from "express";
 import { extractTokenAndDecode } from "../lib/utils.js";
 import { email } from "zod";
+import { updateUserProfileValidationSchema } from "../lib/validators.js";
 
 /**
  * Retrieves the user profile associated with the given JWT token
@@ -26,7 +27,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
         .status(404)
         .json({ success: false, message: "User not found" });
     }
-    res.status(200).json({ success: true, data: user });
+    res.status(200).json({ success: true, message: "User found", data: user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -43,7 +44,8 @@ export const updateUserProfile = async (req: Request, res: Response) => {
       });
     }
     const userId = decoded.id;
-    const { email } = req.body;
+    const { email, userName, userImage } =
+      updateUserProfileValidationSchema.parse(req.body);
 
     const user = await User.findById(userId);
     if (!user) {
@@ -53,6 +55,8 @@ export const updateUserProfile = async (req: Request, res: Response) => {
     }
 
     user.email = email;
+    user.userName = userName;
+    user.userImage = userImage;
     await user.save();
 
     res.status(200).json({ success: true, data: user });

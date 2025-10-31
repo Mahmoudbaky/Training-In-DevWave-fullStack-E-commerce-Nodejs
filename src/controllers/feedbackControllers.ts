@@ -185,7 +185,8 @@ export const getAllFeedbacksForProduct = async (
 
     res.status(200).json({
       success: true,
-      feedbacks: reformattedFeedbacks, // <-- Use the reformatted array here
+      message: "Feedbacks fetched successfully",
+      data: reformattedFeedbacks, // <-- Use the reformatted array here
     });
   } catch (error) {
     res

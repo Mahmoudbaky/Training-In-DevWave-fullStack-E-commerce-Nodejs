@@ -174,6 +174,8 @@ export const verifyOtpAndLogin = async (req: Request, res: Response) => {
         _id: user._id,
         email: user.email,
         role: user.role,
+        userName: user.userName,
+        userImage: user.userImage,
       },
     });
   } catch (error) {

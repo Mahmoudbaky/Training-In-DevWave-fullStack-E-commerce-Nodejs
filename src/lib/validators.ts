@@ -19,6 +19,12 @@ export const createProductValidationSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
+export const updateUserProfileValidationSchema = z.object({
+  email: z.string().email(),
+  userName: z.string().min(2).max(100),
+  userImage: z.string().min(2).max(500).optional(),
+});
+
 export const createFeedbackValidationSchema = z.object({
   productId: z.string().min(2).max(100),
   rating: z.number().min(1).max(5),
