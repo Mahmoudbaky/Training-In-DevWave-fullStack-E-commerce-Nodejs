@@ -35,7 +35,7 @@ const app = express();
 const corsOptions = {
   origin: function (origin: string | undefined, callback: Function) {
     const allowedOrigins = [
-      "https://dev-wave-sportswear-store.vercel.app/",
+      "https://dev-wave-sportswear-store.vercel.app",
       "https://dev-wave-shrimp-zone.vercel.app",
       "https://training-in-dev-wave-full-stack-e-c-dun.vercel.app",
       "http://localhost:5173",
