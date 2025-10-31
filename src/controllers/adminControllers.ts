@@ -1,6 +1,6 @@
-import Product from "../models/product";
-import Order from "../models/order";
-import User from "../models/user";
+import Product from "../models/product.js";
+import Order from "../models/order.js";
+import User from "../models/user.js";
 import { Request, Response } from "express";
 
 // Get data for overview dashboard
